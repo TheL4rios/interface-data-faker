@@ -23,8 +23,6 @@ export class SearchInterfaceService {
     isArray: false,
   };
 
-  private regexVariable = /^[a-zA-z]+[0-9]*/;
-
   constructor(
     private utilService: UtilService
   ) { }
@@ -67,7 +65,7 @@ export class SearchInterfaceService {
 
   private _q1() {
     this.token = this.tokens[this.i];
-    if (this._isValidKeyName()) {
+    if (this.utilService.isValidKeyName(this.token)) {
       this.i++;
       this.temporalInterface.interfaceName = this.token;
       this._q2();
@@ -83,8 +81,14 @@ export class SearchInterfaceService {
   }
 
   private _q3() {
+    this.interfaceBody = {
+      isArray: false,
+      keyName: '',
+      keyType: ''
+    };
+
     this.token = this.tokens[this.i];
-    if (this._isValidKeyName()) {
+    if (this.utilService.isValidKeyName(this.token)) {
       this.i++;
       this.interfaceBody.keyName = this.token;
       this._q4();
@@ -101,7 +105,7 @@ export class SearchInterfaceService {
 
   private _q5() {
     this.token = this.tokens[this.i];
-    if (this._isValidKeyName() || reservedTypes.includes(this.token)) {
+    if (this.utilService.isValidKeyName(this.token) || reservedTypes.includes(this.token)) {
       this.i++;
       this.interfaceBody.keyType = this.token;
 
@@ -119,7 +123,7 @@ export class SearchInterfaceService {
       this.i++;
       this.temporalInterface.properties.push(this.utilService.clon(this.interfaceBody));
       this.token = this.tokens[this.i];
-      if (this._isValidKeyName()) {
+      if (this.utilService.isValidKeyName(this.token)) {
         this._q3();
       } else if (this.token == '}') {
         this.hashTable.push(this.utilService.clon(this.temporalInterface));
@@ -133,13 +137,10 @@ export class SearchInterfaceService {
       this.i++;
       this.token = this.tokens[this.i];
       if (this.token == ']') {
+        this.i++;
         this.interfaceBody.isArray = true;
         this._q6();
       }
     }
-  }
-
-  private _isValidKeyName(): boolean {
-    return !reservedKeywords.includes(this.token) && this.regexVariable.test(this.token);
   }
 }

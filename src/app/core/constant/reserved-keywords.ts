@@ -61,7 +61,8 @@ export const reservedKeywords = [
     'var',
     'void',
     'while',
-    'with'
+    'with',
+    'Date'
 ];
 
 export const reservedTypes = [
@@ -69,4 +70,5 @@ export const reservedTypes = [
     'boolean',
     'number',
     'string',
+    'Date',
 ];

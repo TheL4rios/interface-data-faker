@@ -7,5 +7,23 @@
         <div class="flex justify-end p-5">
             <button class="btn btn-primary" (click)="onGenerateData()">Generate Data</button>
         </div>
+
+        <div class="p-5">
+            <ng-container *ngFor="let fake of fakeData; index as i">
+                <div [tabindex]="i" class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box my-4">
+                    <div class="collapse-title text-xl font-medium">
+                        {{ fake.name }}
+                    </div>
+                    <div class="collapse-content">
+                        <pre>{{ fake.data | json }}</pre>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+
+
+        <div class="p-5" *ngIf="showAlert">
+            <app-alert [title]="title"></app-alert>
+        </div>
     </div>
 </div>
