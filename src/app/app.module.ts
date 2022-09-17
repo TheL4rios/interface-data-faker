@@ -12,13 +12,13 @@ import { AlertComponent } from './core/components/alert/alert.component';
   declarations: [
     AppComponent,
     HeaderComponent,
-    AlertComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    MonacoEditorModule.forRoot(),
+    MonacoEditorModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

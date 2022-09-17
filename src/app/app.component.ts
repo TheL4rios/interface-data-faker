@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FakeData } from './core/interfaces/fake-data.interface';
 import { CodeAnalyzerService } from './core/services/code-analyzer.service';
 import { FakeDataService } from './core/services/fake-data.service';
@@ -12,7 +12,8 @@ export class AppComponent implements OnInit {
   
   editorOptions = {
     theme: 'vs-dark', 
-    language: 'typescript'
+    language: 'typescript',
+
   };
 
   code = '';

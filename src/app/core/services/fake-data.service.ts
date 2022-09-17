@@ -14,7 +14,6 @@ export class FakeDataService {
   private interfaces: IInterface[] = [];
 
   private limitArray = 10;
-  private limitInternalArray = 20;
 
   constructor(
     private util: UtilService
@@ -32,78 +31,65 @@ export class FakeDataService {
     return this.data;
   }
 
-  private addInterface(interfaces: IInterface): FakeData {
+  private addInterface(currenInterface: IInterface): FakeData {
     const temporalData: FakeData = {
-      name: interfaces.interfaceName,
+      name: currenInterface.interfaceName,
       data: []
     }
 
-    const body: GenericData = {};
-    for (const propertie of interfaces.properties) {
-      body[propertie.keyName] = this._getData(propertie.keyType as Types, propertie.isArray);
-    }
-    temporalData.data.push(body);
+    Array(this.limitArray).fill(null).forEach(_ => {
+      const body: GenericData = {};
+      for (const propertie of currenInterface.properties) {
+        body[propertie.keyName] = this._getData(propertie.keyType as Types, propertie.isArray);
+      }
+      temporalData.data.push(body);
+    });
 
     return temporalData;
   }
 
   private _getData(type: Types, isArray: boolean): any {
     if (type == 'any') {
-      if (isArray) {
-        return Array(this.limitArray).fill(null).map(x => randWord());
-      }
-      return randWord();
+      return this.getArrayData(randWord, isArray);
     }
 
     if (type == 'Date') {
-      if (isArray) {
-        return Array(this.limitArray).fill(null).map(x => randPastDate());
-      }
-      return randPastDate();
+      return this.getArrayData(randPastDate, isArray);
     }
 
     if (type == 'boolean') {
-      if (isArray) {
-        return Array(this.limitArray).fill(null).map(x => Math.random() > 0.5);
-      }
-      return Math.random() > 0.5;
+      return this.getArrayData(() => Math.random() > 0.5, isArray);
     }
 
     if (type == 'number') {
-      if (isArray) {
-        return Array(this.limitArray).fill(null).map(x => randNumber());
-      }
-      return randNumber();
+      return this.getArrayData(randNumber, isArray);
     }
 
     if (type == 'string') {
-      if (isArray) {
-        return Array(this.limitArray).fill(null).map(x => randWord());
-      }
-      return randWord();
+      return this.getArrayData(randWord, isArray);
     }
 
     if (this.util.isValidVariable(type)) {
       const exists = this.interfaces.find(_interface => _interface.interfaceName == type);
 
-      const body: GenericData = {};
+      return this.getArrayData(() => {
+        const body: GenericData = {};
 
-      if (!!exists) {
-        if (isArray) {
-          return Array(this.limitInternalArray).fill(null).map(x => {
-            const body: GenericData = {};
-            for (const propertie of exists.properties) {
-              body[propertie.keyName] = this._getData(propertie.keyType as Types, propertie.isArray);
-            }
-            return body;
-          });
+        if (!!exists) {
+          for (const propertie of exists.properties) {
+            body[propertie.keyName] = this._getData(propertie.keyType as Types, propertie.isArray);
+          }
         }
-
-        for (const propertie of exists.properties) {
-          body[propertie.keyName] = this._getData(propertie.keyType as Types, propertie.isArray);
-        }
-      }
-      return body;
+        return body;
+      }, isArray);
     }
+  }
+
+  private getArrayData(callback: Function, isArray: boolean) {
+    if (isArray) {
+      return Array(this.limitArray).fill(null).map(x => callback());
+    }
+
+    return callback();
   }
 }
