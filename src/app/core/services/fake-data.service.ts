@@ -4,6 +4,7 @@ import { randEmail, randFullName, randNumber, randPastDate, randWord } from '@ng
 import { FakeData, GenericData } from '../interfaces/fake-data.interface';
 import { Types } from '../enums/key-words.enum';
 import { UtilService } from './util.service';
+import { SpecificFakeDataService } from './specific-fake-data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +14,11 @@ export class FakeDataService {
   private data: FakeData[] = [];
   private interfaces: IInterface[] = [];
 
-  private limitArray = 10;
+  private limitArray = 1;
 
   constructor(
-    private util: UtilService
+    private util: UtilService,
+    private specificFakeDataService: SpecificFakeDataService
   ) { }
 
   getFakeData(interfaces: IInterface[]) {
@@ -79,6 +81,8 @@ export class FakeDataService {
           for (const propertie of exists.properties) {
             body[propertie.keyName] = this._getData(propertie.keyType as Types, propertie.isArray);
           }
+        } else {
+          return this.specificFakeDataService.getData(type);
         }
         return body;
       }, isArray);
@@ -87,7 +91,7 @@ export class FakeDataService {
 
   private getArrayData(callback: Function, isArray: boolean) {
     if (isArray) {
-      return Array(this.limitArray).fill(null).map(x => callback());
+      return Array(this.limitArray).fill(null).map(_ => callback());
     }
 
     return callback();

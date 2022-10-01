@@ -42,9 +42,7 @@ interface Author {
 
 		const tokens = [];
 
-		for (let i = 0; i < code.length; i++) {
-			const letter = code[i];
-
+		for (const letter of code) {
 			if (this.limiters.includes(letter)) {
 				if (!!word.trim()) {
 					tokens.push(word);
