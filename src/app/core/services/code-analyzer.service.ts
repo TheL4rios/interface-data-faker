@@ -9,17 +9,25 @@ import { SearchInterfaceService } from './search-interface.service';
 export class CodeAnalyzerService {
 
 	private limiters = '\n\t {}[]*+/-;:()=><!';
-	private _initialCode = `// Example of interface to generate fake data
+	private _initialCode = `/* 
+	Example of interface to generate fake data.
+	
+	You can use specific types with enum "Types" for example:
+	 *Types.MOVIE
+	 *Types.PRICE
+	 *Types.USER_NAME
+	 *Types.MONTH
+*/
 
 interface Book {
-  name: string;
+  name: Types.BOOK;
   pages: number;
   author: Author;
 }
 
 interface Author {
-  name: string;
-  age: number;
+  name: Types.FULL_NAME;
+  age: Types.AGE;
 }
   `;
 

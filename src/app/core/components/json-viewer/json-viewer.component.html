@@ -1,0 +1,12 @@
+<div class="collapse">
+    <input type="checkbox" class="peer" />
+    <div class="collapse-title bg-gray-800 border border-sky-500">
+        <span class="text-primary-content peer-checked:text-secondary-content">{{ fake.name }}</span>
+    </div>
+    <div class="collapse-content bg-gray-800 text-primary-content peer-checked:text-secondary-content">
+        <div class="flex justify-end w-100 mt-2">
+            <button class="btn btn-primary" [class.loading]="isCopying" (click)="copy()">Copy</button>
+        </div>
+        <pre>{{ fake.data | json }}</pre>
+    </div>
+</div>

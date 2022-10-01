@@ -21,7 +21,8 @@ export class FakeDataService {
     private specificFakeDataService: SpecificFakeDataService
   ) { }
 
-  getFakeData(interfaces: IInterface[]) {
+  getFakeData(interfaces: IInterface[], limitArray: number) {
+    this.limitArray = limitArray;
     this.interfaces = interfaces;
     this.data =  [];
 
@@ -79,7 +80,11 @@ export class FakeDataService {
 
         if (!!exists) {
           for (const propertie of exists.properties) {
-            body[propertie.keyName] = this._getData(propertie.keyType as Types, propertie.isArray);
+            if (propertie.keyType == type) {
+              body[propertie.keyName] = null;
+            } else {
+              body[propertie.keyName] = this._getData(propertie.keyType as Types, propertie.isArray);
+            }
           }
         } else {
           return this.specificFakeDataService.getData(type);

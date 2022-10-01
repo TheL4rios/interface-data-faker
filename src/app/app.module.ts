@@ -6,9 +6,9 @@ import { MonacoEditorModule, NgxMonacoEditorConfig } from 'ngx-monaco-editor';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './core/components/header/header.component';
-import { AlertComponent } from './core/components/alert/alert.component';
 import { types } from './core/constant/types';
 import { NgToastModule } from 'ng-angular-popup';
+import { JsonViewerComponent } from './core/components/json-viewer/json-viewer.component';
 
 const monacoConfig: NgxMonacoEditorConfig = {
   baseUrl: './assets',
@@ -23,7 +23,7 @@ const monacoConfig: NgxMonacoEditorConfig = {
   declarations: [
     AppComponent,
     HeaderComponent,
-    AlertComponent
+    JsonViewerComponent,
   ],
   imports: [
     BrowserModule,

@@ -2,3 +2,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.btn.loading:before {
+    animation: spin 0.3s linear infinite;
+}

@@ -2,7 +2,7 @@
     <div class="col-span-1 h-screen">
         <ngx-monaco-editor class="code-editor" [options]="editorOptions" [(ngModel)]="code"></ngx-monaco-editor>
     </div>
-    <div class="col-span-1 h-screen">
+    <div class="col-span-1 h-screen flex-1 overflow-y-auto">
         <app-header></app-header>
         <div class="flex justify-between items-center p-5">
             <form [formGroup]="form">
@@ -21,25 +21,14 @@
                     </div>
                 </div>
             </form>
-            <button class="btn btn-primary" (click)="onGenerateData()">Generate Data</button>
+            <button class="btn btn-primary" [class.loading]="isLoading" (click)="onGenerateData()">Generate Data</button>
         </div>
 
         <div class="p-5">
             <ng-container *ngFor="let fake of fakeData; index as i">
-                <div tabindex="0" class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box my-4">
-                    <div class="collapse-title text-xl font-medium">
-                        {{ fake.name }}
-                    </div>
-                    <div class="collapse-content">
-                        <pre>{{ fake.data | json }}</pre>
-                    </div>
-                </div>
+                <app-json-viewer [fake]="fake"></app-json-viewer>
             </ng-container>
-        </div>
-
-
-        <div class="p-5" *ngIf="showAlert">
-            <app-alert [title]="title"></app-alert>
         </div>
     </div>
 </div>
+<lib-ng-toast></lib-ng-toast>

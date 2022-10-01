@@ -76,7 +76,6 @@ export const types = `enum Types {
     PRODUCT_CATEGORY,
     PRODUCT_DESCRIPTION,
     PRODUCT_NAME,
-    PRODUCT,
     PROGRAMMING_LANGUAGE,
     RECENT_DATE,
     RGB,
