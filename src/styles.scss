@@ -6,3 +6,7 @@
 .btn.loading:before {
     animation: spin 0.3s linear infinite;
 }
+
+.collapse:not(.collapse-close) input[type="checkbox"]:checked ~ .collapse-content {
+    max-height: none !important;
+}
