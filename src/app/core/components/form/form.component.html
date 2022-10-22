@@ -1,0 +1,19 @@
+<div class="flex justify-between items-center p-5">
+    <form [formGroup]="form">
+        <div class="form-control">
+            <label class="label">
+                <span class="label-text">Limit of array</span>
+            </label>
+            <input type="number" placeholder="E.g. 5" class="input input-bordered" formControlName="limitArray" style="min-width: 200px;"/>
+            <div class="relative" *ngIf="form.get('limitArray')?.hasError('min') || form.get('limitArray')?.hasError('max')">
+                <span *ngIf="form.get('limitArray')?.hasError('min')" class="text-red-500 absolute pt-2">
+                    Minimum limit array is {{ minLimitArray }}.
+                </span> 
+                <span *ngIf="form.get('limitArray')?.hasError('max')" class="text-red-500 absolute pt-2">
+                    Maximum limit array is {{ maxLimitArray }}.
+                </span> 
+            </div>
+        </div>
+    </form>
+    <button class="btn btn-primary" [class.loading]="isLoading" (click)="onGenerateData()">Generate Data</button>
+</div>

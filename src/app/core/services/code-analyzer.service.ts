@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Comment } from '../enums/comment.enum';
-import { KeyWord } from '../enums/key-words.enum';
 import { SearchInterfaceService } from './search-interface.service';
 
 @Injectable({

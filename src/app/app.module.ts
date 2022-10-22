@@ -9,9 +9,9 @@ import { HeaderComponent } from './core/components/header/header.component';
 import { types } from './core/constant/types';
 import { NgToastModule } from 'ng-angular-popup';
 import { JsonViewerComponent } from './core/components/json-viewer/json-viewer.component';
+import { FormComponent } from './core/components/form/form.component';
 
 const monacoConfig: NgxMonacoEditorConfig = {
-  baseUrl: './assets',
   defaultOptions: { scrollBeyondLastLine: false },
   onMonacoLoad: () => { 
     const monaco = (<any>window).monaco; 
@@ -24,6 +24,7 @@ const monacoConfig: NgxMonacoEditorConfig = {
     AppComponent,
     HeaderComponent,
     JsonViewerComponent,
+    FormComponent,
   ],
   imports: [
     BrowserModule,
