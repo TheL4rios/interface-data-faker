@@ -72,6 +72,7 @@ export class AppComponent implements OnInit {
 
     if (!interfaces.length) {
       this.toast.showError('Error', 'Interfaces not found');
+      this.isLoading = false;
       return;
     }
     
