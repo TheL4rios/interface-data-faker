@@ -7,6 +7,7 @@ import { SearchInterfaceService } from './search-interface.service';
 })
 export class CodeAnalyzerService {
 
+	private regexToRemoveComments = /\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm;
 	private limiters = '\n\t {}[]*+/-;:()=><!';
 	private _initialCode = `/* 
 	Example of interface to generate fake data.
@@ -39,7 +40,7 @@ interface Author {
 	}
 
 	analyzeCode(code: string) {
-		const tokens = this._extractCommencts(this._getTokens(code));
+		const tokens = this._getTokens(code.replace(this.regexToRemoveComments, ''));
 		const interfaces = this.searchInterfaceService.getInterfaces(tokens);
 		return interfaces;
 	}
@@ -50,12 +51,16 @@ interface Author {
 		const tokens = [];
 
 		for (const letter of code) {
+			if (letter == '\n') {
+				continue;
+			}
+
 			if (this.limiters.includes(letter)) {
 				if (!!word.trim()) {
 					tokens.push(word);
 				}
 				
-				if (letter == '\n' || !!letter.trim()) {
+				if (!!letter.trim()) {
 					tokens.push(letter);
 				}
 				word = '';
@@ -65,33 +70,5 @@ interface Author {
 		}
 
 		return tokens;
-	}
-
-	private _extractCommencts(tokens: string[]): string[] {
-		const cleanTokens = [];
-
-		for (let i = 0; i < tokens.length; i++) {
-			let token = tokens[i];
-			const symbolComment = token + tokens[i + 1];
-			if ([Comment.SINGLE_LINE_COMMENT, Comment.MULTI_LINE_COMMENT_START].includes((symbolComment) as Comment)) {
-				if (symbolComment == Comment.SINGLE_LINE_COMMENT) {
-					while(!!token && token != '\n') {
-						i++;
-						token = tokens[i];
-					}
-				} else if (symbolComment == Comment.MULTI_LINE_COMMENT_START) {
-					while(!!token && token != Comment.MULTI_LINE_COMMENT_END) {
-						i++;
-						token = tokens[i] + tokens[i + 1];
-					}
-				}
-			}
-
-			if (!!token.trim()) {
-				cleanTokens.push(token);
-			}
-		}
-
-		return cleanTokens;
 	}
 }
