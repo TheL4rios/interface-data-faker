@@ -20,7 +20,7 @@ export class FormComponent {
   form!: FormGroup;
 
   minLimitArray = 1;
-  maxLimitArray = 100;
+  maxLimitArray = 100000;
 
   isLoading = false;
 
